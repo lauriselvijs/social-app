@@ -15,19 +15,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { Link as RouterLink } from "react-router-dom";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -58,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login() {
+function Login({ copyright }) {
   const classes = useStyles();
 
   return (
@@ -122,9 +109,7 @@ function Login() {
                 </Link>
               </Grid>
             </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
+            <Box mt={5}>{copyright}</Box>
           </form>
         </div>
       </Grid>

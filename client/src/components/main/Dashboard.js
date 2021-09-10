@@ -13,7 +13,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -25,19 +24,8 @@ import InputBase from "@material-ui/core/InputBase";
 import AddIcon from "@material-ui/icons/Add";
 import { mainListItems } from "./listItems";
 import UserCard from "./UserCard";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import SocialCardForm from "./SocialCardForm";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 const drawerWidth = 240;
 
@@ -159,14 +147,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Dashboard() {
+function Dashboard({ copyright }) {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+
+  const [openDrawer, setOpenDrawer] = useState(true);
+  const [openForm, setOpenForm] = useState(false);
+
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setOpenDrawer(!openDrawer);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
+
+  const handleFormOpen = () => {
+    setOpenForm(!openForm);
   };
 
   return (
@@ -174,7 +166,7 @@ function Dashboard() {
       <CssBaseline />
       <AppBar
         position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
+        className={clsx(classes.appBar, openDrawer && classes.appBarShift)}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -184,7 +176,7 @@ function Dashboard() {
             onClick={handleDrawerOpen}
             className={clsx(
               classes.menuButton,
-              open && classes.menuButtonHidden
+              openDrawer && classes.menuButtonHidden
             )}
           >
             <MenuIcon />
@@ -213,7 +205,11 @@ function Dashboard() {
           </div>
           <IconButton color="inherit">
             <Badge color="secondary">
-              <AddIcon />
+              {!openForm ? (
+                <AddIcon onClick={handleFormOpen} />
+              ) : (
+                <CancelIcon color="error" onClick={handleFormOpen} />
+              )}
             </Badge>
           </IconButton>
           <IconButton color="inherit">
@@ -242,12 +238,15 @@ function Dashboard() {
       <Drawer
         variant="permanent"
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          paper: clsx(
+            classes.drawerPaper,
+            !openDrawer && classes.drawerPaperClose
+          ),
         }}
-        open={open}
+        open={openDrawer}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerOpen}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -259,13 +258,17 @@ function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {/* Recent Deposits */}
+            {openForm && (
+              <Grid item xs={12} md={4} lg={3}>
+                <SocialCardForm />
+              </Grid>
+            )}
+
             <Grid item xs={12} md={4} lg={3}>
               <UserCard />
             </Grid>
           </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
+          <Box pt={4}>{copyright}</Box>
         </Container>
       </main>
     </div>

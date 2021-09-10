@@ -14,9 +14,6 @@ const useStyles = makeStyles({
   root: {
     maxWidth: 300,
   },
-  media: {
-    height: 140,
-  },
 });
 
 function UserCard() {

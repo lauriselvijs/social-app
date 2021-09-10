@@ -1,19 +1,41 @@
 import "./App.css";
 import Login from "./components";
 import SignUp from "./components/signup";
-import MainView from "./components/main";
-import Navbar from "./components/utils/Navbar";
 import Copyright from "./components/utils/Copyright";
+import Dashboard from "./components/main";
+import NotFound from "./components/not-found";
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Route path="/" exact render={(props) => <Login />} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/main" component={MainView} />
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={(props) => <Login copyright={Copyright} />}
+          />
+          <Route
+            path="/signup"
+            exact
+            render={(props) => <SignUp copyright={Copyright} />}
+          />
+          <Route
+            path="/dashboard"
+            exact
+            render={(props) => <Dashboard copyright={Copyright} />}
+          />
+          <Route
+            render={(props) => (
+              <>
+                <NotFound />
+                <Copyright />
+              </>
+            )}
+          />
+        </Switch>
       </div>
     </Router>
   );

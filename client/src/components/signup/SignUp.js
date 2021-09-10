@@ -15,19 +15,6 @@ import Container from "@material-ui/core/Container";
 
 import { Link as RouterLink } from "react-router-dom";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -48,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp({ copyright }) {
   const classes = useStyles();
 
   return (
@@ -134,9 +121,7 @@ export default function SignUp() {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+      <Box mt={5}>{copyright}</Box>
     </Container>
   );
 }

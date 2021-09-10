@@ -1,3 +1,3 @@
-import MainView from "./MainView";
+import Dashboard from "./Dashboard";
 
-export default MainView;
+export default Dashboard;
