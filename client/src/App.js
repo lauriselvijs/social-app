@@ -4,6 +4,8 @@ import SignUp from "./components/signup";
 import Copyright from "./components/utils/Copyright";
 import Dashboard from "./components/main";
 import NotFound from "./components/not-found";
+import Navbar from "./components/utils/Navbar";
+import MyAccount from "./components/my-account/";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -26,6 +28,17 @@ function App() {
             path="/dashboard"
             exact
             render={(props) => <Dashboard copyright={Copyright} />}
+          />
+          <Route
+            path="/my-account"
+            exact
+            render={(props) => (
+              <>
+                <Navbar />
+                <MyAccount />
+                <Copyright />
+              </>
+            )}
           />
           <Route
             render={(props) => (

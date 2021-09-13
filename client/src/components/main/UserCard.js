@@ -25,9 +25,17 @@ function UserCard() {
         <Typography gutterBottom variant="h5" component="h2">
           Title
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          gutterBottom
+        >
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est
           doloremque impedit quo ad eos quasi quia hic nobis ea iure.
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" component="p">
+          Date added: 12-24-2021
         </Typography>
       </CardContent>
       <CardActions>

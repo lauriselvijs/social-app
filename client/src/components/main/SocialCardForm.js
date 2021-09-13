@@ -11,6 +11,8 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import InputErrMsg from "./InputErrMsg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   formControl: {
-    minWidth: 210,
+    minWidth: 200,
   },
   textField: { marginBottom: theme.spacing(2) },
   selectMenu: { minWidth: 200 },
@@ -30,10 +32,21 @@ const useStyles = makeStyles((theme) => ({
 function SocialCardForm() {
   const classes = useStyles();
   const [category, setCategory] = useState("Note");
+  const [textBoxText, setTextBoxText] = useState();
   const [savePost, setSavePost] = useState(false);
+  const [showError, setShowError] = useState(false);
 
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (!textBoxText || !category) {
+      setShowError(true);
+    } else {
+      console.log("Text added");
+      setCategory("Note");
+      setTextBoxText("");
+      setShowError(false);
+    }
   };
 
   const handleSave = () => {
@@ -46,9 +59,17 @@ function SocialCardForm() {
         <Typography gutterBottom variant="h5" component="h2">
           Add new post
         </Typography>
-        <form className={classes.formControl} noValidate autoComplete="off">
+        <form
+          id="social-card-form"
+          className={classes.formControl}
+          noValidate
+          autoComplete="off"
+          onSubmit={onSubmit}
+        >
           <TextField
             className={classes.textField}
+            value={textBoxText}
+            onChange={(e) => setTextBoxText(e.target.value)}
             multiline
             rows={4}
             placeholder="Type something..."
@@ -60,7 +81,7 @@ function SocialCardForm() {
             labelId="category-select-label"
             value={category}
             displayEmpty
-            onChange={handleCategoryChange}
+            onChange={(e) => setCategory(e.target.value)}
           >
             <MenuItem value={"Note"}>Note</MenuItem>
             <MenuItem value={"Idea"}>Idea</MenuItem>
@@ -69,8 +90,16 @@ function SocialCardForm() {
         </form>
       </CardContent>
       <CardActions>
+        {showError && (
+          <InputErrMsg showError={showError} setShowError={setShowError} />
+        )}
         <Box justifyContent="flex-center">
-          <Button size="small" color="primary">
+          <Button
+            form="social-card-form"
+            type="submit"
+            size="small"
+            color="primary"
+          >
             <SaveIcon onClick={handleSave} />
           </Button>
         </Box>

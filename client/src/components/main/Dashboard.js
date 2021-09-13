@@ -26,6 +26,10 @@ import { mainListItems } from "./listItems";
 import UserCard from "./UserCard";
 import SocialCardForm from "./SocialCardForm";
 import CancelIcon from "@material-ui/icons/Cancel";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { Link as RouterLink } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -145,6 +149,9 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  gridItems: {
+    marginTop: theme.spacing(1),
+  },
 }));
 
 function Dashboard({ copyright }) {
@@ -227,12 +234,17 @@ function Dashboard({ copyright }) {
               <SettingsIcon />
             </Badge>
           </IconButton>
-          <IconButton color="inherit">
+          <IconButton color="inherit" component={RouterLink} to="/my-account">
             <Badge color="secondary">
               <AccountCircleIcon fontSize="large" />
             </Badge>
           </IconButton>
           {"john@gmail.com"}
+          <IconButton color="inherit" component={RouterLink} to="/">
+            <Badge color="secondary">
+              <ExitToAppIcon fontSize="large" />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -257,7 +269,28 @@ function Dashboard({ copyright }) {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Recent Deposits */}
+            <Grid item sm={6} md={8} lg={10}></Grid>
+            <Grid item sm={6} md={4} lg={2}>
+              <Box
+                textAlign="right"
+                flexDirection="row"
+                justifyContent="flex-end"
+              >
+                <IconButton color="inherit">
+                  <Badge color="secondary">
+                    <CalendarTodayIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton color="inherit">
+                  <Badge color="secondary">
+                    <SortByAlphaIcon />
+                  </Badge>
+                </IconButton>
+              </Box>
+            </Grid>
+          </Grid>
+          <Divider />
+          <Grid container spacing={3} className={classes.gridItems}>
             {openForm && (
               <Grid item xs={12} md={4} lg={3}>
                 <SocialCardForm />
