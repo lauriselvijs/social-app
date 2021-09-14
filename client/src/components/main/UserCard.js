@@ -16,14 +16,14 @@ const useStyles = makeStyles({
   },
 });
 
-function UserCard() {
+function UserCard({ card: { title, text, dateAdded, category }, onDelete }) {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
-          Title
+          {title}
         </Typography>
         <Typography
           variant="body2"
@@ -31,11 +31,10 @@ function UserCard() {
           component="p"
           gutterBottom
         >
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est
-          doloremque impedit quo ad eos quasi quia hic nobis ea iure.
+          {text}
         </Typography>
         <Typography variant="subtitle2" color="textSecondary" component="p">
-          Date added: 12-24-2021
+          {dateAdded}
         </Typography>
       </CardContent>
       <CardActions>
@@ -50,7 +49,7 @@ function UserCard() {
             Edit
           </Button>
           <Button size="small" color="primary">
-            <DeleteIcon />
+            <DeleteIcon onClick={() => onDelete()} />
           </Button>
         </Box>
       </CardActions>

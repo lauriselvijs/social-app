@@ -23,7 +23,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import AddIcon from "@material-ui/icons/Add";
 import { mainListItems } from "./listItems";
-import UserCard from "./UserCard";
+import UserCards from "./UserCards";
 import SocialCardForm from "./SocialCardForm";
 import CancelIcon from "@material-ui/icons/Cancel";
 import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
@@ -296,11 +296,8 @@ function Dashboard({ copyright }) {
                 <SocialCardForm />
               </Grid>
             )}
-
-            <Grid item xs={12} md={4} lg={3}>
-              <UserCard />
-            </Grid>
           </Grid>
+          <UserCards />
           <Box pt={4}>{copyright}</Box>
         </Container>
       </main>

@@ -12,7 +12,6 @@ import { returnErrors } from "./errorActions";
 export const getUserCards = () => async (dispatch, getState) => {
   function onSuccess(success) {
     dispatch({ type: GET_USER_CARDS, payload: success });
-    return success;
   }
   function onError(error) {
     dispatch(returnErrors(error.response.data, error.response.status));

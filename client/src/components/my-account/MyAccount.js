@@ -6,6 +6,12 @@ import Button from "@material-ui/core/Button";
 import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+  },
   title: {
     margin: theme.spacing(4),
   },
@@ -22,7 +28,7 @@ function MyAccount() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.root}>
       <div className={classes.appBarSpacer} />
       <CssBaseline />
       <Typography className={classes.title} variant="h4">

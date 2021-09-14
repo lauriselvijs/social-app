@@ -103,15 +103,17 @@ export default function SignUp({ copyright }) {
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
-          </Button>
+          <Link component={RouterLink} to="/dashboard" variant="body2">
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign Up
+            </Button>
+          </Link>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link component={RouterLink} to="/" variant="body2">

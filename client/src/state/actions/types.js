@@ -3,6 +3,8 @@ export const ADD_USER_CARD = "ADD_USER_CARD";
 export const DELETE_USER_CARD = "DELETE_USER_CARD";
 export const USER_CARDS_LOADING = "USER_CARDS_LOADING";
 
+export const FORM_SWITCH = "FORM_SWITCH";
+
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
