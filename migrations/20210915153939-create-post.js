@@ -15,6 +15,10 @@ module.exports = {
       body: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notNull: { msg: "Post body has to be set" },
+          notEmpty: { msg: "Post body cant be empty" },
+        },
       },
       userId: {
         type: DataTypes.INTEGER,
@@ -23,6 +27,14 @@ module.exports = {
       category: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notNull: { msg: "Post category has to be set" },
+          notEmpty: { msg: "Post cant be without category" },
+          isIn: {
+            args: [["Note", "Idea", "Request"]],
+            msg: "Must be Note or Idea or Request",
+          },
+        },
       },
       createdAt: {
         allowNull: false,

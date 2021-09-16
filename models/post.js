@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ User }) {
       // define association here
-      this.belongsTo(User, { foreignKey: "userId" });
+      this.belongsTo(User, { foreignKey: "userId", as: "user" });
+    }
+
+    toJSON() {
+      return { ...this.get(), id: undefined, userId: undefined };
     }
   }
   Post.init(
@@ -21,10 +25,22 @@ module.exports = (sequelize, DataTypes) => {
       body: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notNull: { msg: "Post body has to be set" },
+          notEmpty: { msg: "Post body cant be empty" },
+        },
       },
       category: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notNull: { msg: "Post category has to be set" },
+          notEmpty: { msg: "Post cant be without category" },
+          isIn: {
+            args: [["Note", "Idea", "Request"]],
+            msg: "Must be Note or Idea or Request",
+          },
+        },
       },
     },
     {

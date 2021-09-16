@@ -5,61 +5,17 @@ const { sequelize, User, Post } = require("./models");
 
 dotenv.config({ path: "./config/config.env" });
 
+const posts = require("./routes/api/posts");
+const users = require("./routes/api/users");
+const auth = require("./routes/api/auth");
+
 const app = express();
 
 app.use(express.json());
 
-app.get("/users", async (req, res) => {
-  try {
-    const users = await User.findAll();
-
-    return res.json(users);
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ error: "Something went wrong" });
-  }
-});
-
-app.get("/users/:uuid", async (req, res) => {
-  const uuid = req.params.uuid;
-  try {
-    const user = await User.findOne({
-      where: { uuid },
-    });
-
-    return res.json(user);
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ error: "Something went wrong" });
-  }
-});
-
-app.post("/users", async (req, res) => {
-  const { first_name, last_name, email, password } = req.body;
-
-  try {
-    const user = await User.create({ first_name, last_name, email, password });
-
-    return res.json(user);
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
-});
-
-app.post("/posts", async (req, res) => {
-  const { userUuid, body, category } = req.body;
-
-  try {
-    const user = await User.findOne({ where: { uuid: userUuid } });
-    const post = await Post.create({ body, category, userId: user.id });
-
-    return res.json(post);
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
-});
+app.use("/api/posts", posts);
+app.use("/api/users", users);
+app.use("/api/auth", auth);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
@@ -77,7 +33,7 @@ app.listen(PORT, async () => {
   );
   try {
     await sequelize.authenticate();
-    console.log("Database Connected!");
+    console.log("Database Connected!".green.bold);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Failed to connect" });
