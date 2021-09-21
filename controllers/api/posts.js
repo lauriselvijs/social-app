@@ -62,10 +62,7 @@ exports.addPost = async (req, res, next) => {
     const userUuid = req.user.uuid;
 
     const user = await User.findOne({ where: { uuid: userUuid } });
-    const post = await Post.create(
-      { body, category },
-      { where: { userId: user.id } }
-    );
+    const post = await Post.create({ body, category, userId: user.id });
 
     return res.status(201).json({
       success: true,
@@ -74,7 +71,7 @@ exports.addPost = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({
       success: false,
-      error: "Server Error",
+      error: err,
     });
   }
 };
@@ -91,12 +88,12 @@ exports.editPost = async (req, res, next) => {
 
     const post = await Post.update(
       { body, category },
-      { where: { userId: user.id } }
+      { where: { userId: user.id }, returning: true, plain: true }
     );
 
     return res.status(200).json({
       success: true,
-      data: post,
+      data: post[1],
     });
   } catch (err) {
     return res.status(500).json({
@@ -107,14 +104,17 @@ exports.editPost = async (req, res, next) => {
 };
 
 // @desc Delete post
-// @route DELETE /api/posts
+// @route DELETE /api/posts/:uuid
 // @access Private
 exports.deletePost = async (req, res, next) => {
   try {
-    const uuid = req.user.uuid;
+    const userUuid = req.user.uuid;
+    const uuid = req.params.uuid;
+
+    const user = await User.findOne({ where: { uuid: userUuid } });
 
     const post = await Post.findOne({
-      where: { uuid },
+      where: { userId: user.id, uuid },
     });
 
     await post.destroy();

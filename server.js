@@ -14,7 +14,6 @@ const app = express();
 
 app.use(express.json());
 
-
 app.use("/api/posts", posts);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
@@ -33,7 +32,7 @@ app.listen(PORT, async () => {
   console.log(
     `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
   );
-  
+
   try {
     await sequelize.authenticate();
     console.log("Database Connected!".green.bold);
@@ -41,5 +40,4 @@ app.listen(PORT, async () => {
     console.log(err);
     return res.status(500).json({ error: "Failed to connect" });
   }
-  
 });
