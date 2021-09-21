@@ -4,6 +4,7 @@ const {
   getPosts,
   getPost,
   addPost,
+  editPost,
   deletePost,
 } = require("../../controllers/api/posts");
 
@@ -13,7 +14,13 @@ const { auth } = require("../../middleware/api/auth");
 
 // every request POST, GET DELETE, ... after all() be
 // affected by middleware auth for same path ("/")
-router.route("/").all(auth).post(addPost).get(getPosts).delete(deletePost);
-router.route("/:id").all(auth).get(getPost);
+router
+  .route("/")
+  .all(auth)
+  .post(addPost)
+  .get(getPosts)
+  .patch(editPost)
+  .delete(deletePost);
+router.route("/:uuid").all(auth).get(getPost);
 
 module.exports = router;

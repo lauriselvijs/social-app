@@ -57,10 +57,11 @@ exports.registerNewUser = (req, res, next) => {
 };
 
 // @desc Get user data
-// @route GET /api/users
+// @route GET /api/users/:uuid
 // @access Private
 exports.getUserData = async (req, res, next) => {
-  const uuid = req.user.uuid;
+  const uuid = req.params.uuid;
+
   try {
     const user = await User.findOne({
       where: { uuid },
@@ -70,5 +71,64 @@ exports.getUserData = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Something went wrong" });
+  }
+};
+
+// @desc Edits user information
+// @route PATCH /api/users
+// @access Private
+exports.editUserInfo = async (req, res, next) => {
+  try {
+    const uuid = req.user.uuid;
+    const { first_name, last_name, email } = req.body;
+
+    const user = await User.findOne({ where: { email } });
+
+    if (user) {
+      return res.status(404).json({
+        success: false,
+        error: "User already exists, please provide unique email",
+      });
+    }
+
+    const newUser = await User.update(
+      { first_name, last_name, email },
+      { where: { uuid }, returning: true, plain: true }
+    );
+
+    return res.status(200).json({
+      success: true,
+      data: newUser[1],
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
+
+// @desc Delete user
+// @route DELETE /api/users
+// @access Private
+exports.deleteUser = async (req, res, next) => {
+  try {
+    const uuid = req.user.uuid;
+
+    const user = await User.findOne({
+      where: { uuid },
+    });
+
+    await user.destroy();
+
+    return res.status(200).json({
+      success: true,
+      data: {},
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
   }
 };

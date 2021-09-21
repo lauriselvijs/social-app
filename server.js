@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
+
 const { sequelize, User, Post } = require("./models");
 
 dotenv.config({ path: "./config/config.env" });
@@ -12,6 +13,7 @@ const auth = require("./routes/api/auth");
 const app = express();
 
 app.use(express.json());
+
 
 app.use("/api/posts", posts);
 app.use("/api/users", users);
@@ -31,6 +33,7 @@ app.listen(PORT, async () => {
   console.log(
     `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
   );
+  
   try {
     await sequelize.authenticate();
     console.log("Database Connected!".green.bold);
@@ -38,4 +41,5 @@ app.listen(PORT, async () => {
     console.log(err);
     return res.status(500).json({ error: "Failed to connect" });
   }
+  
 });

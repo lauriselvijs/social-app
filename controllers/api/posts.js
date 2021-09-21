@@ -1,4 +1,4 @@
-const { Post } = require("../../models");
+const { Post, User } = require("../../models");
 
 // @desc Get all the posts with users
 // @route GET /api/posts
@@ -26,6 +26,8 @@ exports.getPosts = async (req, res, next) => {
 // @route GET /api/posts/:uuid
 // @access Private
 exports.getPost = async (req, res, next) => {
+  const uuid = req.params.uuid;
+
   try {
     const post = await Post.findOne({
       where: { uuid },
@@ -57,12 +59,42 @@ exports.getPost = async (req, res, next) => {
 exports.addPost = async (req, res, next) => {
   try {
     const { body, category } = req.body;
-    const userUuid = req.user.id;
+    const userUuid = req.user.uuid;
 
     const user = await User.findOne({ where: { uuid: userUuid } });
-    const post = await Post.create({ body, category, userId: user.id });
+    const post = await Post.create(
+      { body, category },
+      { where: { userId: user.id } }
+    );
 
     return res.status(201).json({
+      success: true,
+      data: post,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
+
+// @desc Update post
+// @route PATCH /api/posts
+// @access Private
+exports.editPost = async (req, res, next) => {
+  try {
+    const uuid = req.user.uuid;
+    const { body, category } = req.body;
+
+    const user = await User.findOne({ where: { uuid } });
+
+    const post = await Post.update(
+      { body, category },
+      { where: { userId: user.id } }
+    );
+
+    return res.status(200).json({
       success: true,
       data: post,
     });
@@ -79,18 +111,11 @@ exports.addPost = async (req, res, next) => {
 // @access Private
 exports.deletePost = async (req, res, next) => {
   try {
-    const uuid = req.user.id;
+    const uuid = req.user.uuid;
 
     const post = await Post.findOne({
       where: { uuid },
     });
-
-    if (!post) {
-      return res.status(404).json({
-        success: false,
-        error: "No post found",
-      });
-    }
 
     await post.destroy();
 

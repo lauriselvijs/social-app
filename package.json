@@ -11,10 +11,6 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "concurrently": "^6.2.1",
-    "nodemon": "^2.0.7"
-  },
   "dependencies": {
     "@material-ui/lab": "^4.0.0-alpha.60",
     "bcryptjs": "^2.4.3",
@@ -25,5 +21,9 @@
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1",
+    "nodemon": "^1.19.4"
   }
 }
