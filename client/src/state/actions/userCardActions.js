@@ -18,7 +18,7 @@ export const getUserCards = () => async (dispatch, getState) => {
   }
   try {
     dispatch(setUserCardsLoading());
-    const success = await axios.get("/api/v1/notes", tokenConfig(getState));
+    const success = await axios.get("/api/posts", tokenConfig(getState));
     return onSuccess(success.data.data);
   } catch (error) {
     return onError(error);
@@ -35,7 +35,7 @@ export const addUserCard = (note) => async (dispatch, getState) => {
     return error;
   }
   try {
-    await axios.post("/api/v1/notes", note, tokenConfig(getState));
+    await axios.post("/api/posts", note, tokenConfig(getState));
     return onSuccess();
   } catch (error) {
     return onError(error);
@@ -52,7 +52,7 @@ export const deleteUserCard = (id) => async (dispatch, getState) => {
     return error;
   }
   try {
-    await axios.delete(`/api/v1/notes/${id}`, tokenConfig(getState));
+    await axios.delete(`/api/posts/${id}`, tokenConfig(getState));
     return onSuccess();
   } catch (error) {
     return onError(error);

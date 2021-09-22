@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,7 +13,15 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { Link as RouterLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { authActions } from "../state";
+import { errorActions } from "../state";
+
+import { Link as RouterLink, Redirect } from "react-router-dom";
+
+import InputErrMsg from "./utils/InputErrMsg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,6 +56,41 @@ const useStyles = makeStyles((theme) => ({
 function Login({ copyright }) {
   const classes = useStyles();
 
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [showError, setShowError] = useState(false);
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const error = useSelector((state) => state.error);
+
+  const dispatch = useDispatch();
+
+  const { login } = bindActionCreators(authActions, dispatch);
+  const { clearErrors } = bindActionCreators(errorActions, dispatch);
+
+  // checking for empty input
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const user = {
+      email,
+      password,
+    };
+
+    login(user);
+  };
+
+  useEffect(() => {
+    error.id === "LOGIN_FAIL" ? setShowError(true) : setShowError(false);
+  }, [error]);
+
+  //loudoe@gmail.com
+  //"password": "123456"
+
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -60,7 +103,7 @@ function Login({ copyright }) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={onSubmit} noValidate>
             <TextField
               variant="outlined"
               margin="normal"
@@ -71,6 +114,8 @@ function Login({ copyright }) {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -82,12 +127,10 @@ function Login({ copyright }) {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Link component={RouterLink} to="/dashboard" variant="body2">
+            <Link variant="body2">
               <Button
                 type="submit"
                 fullWidth
@@ -98,6 +141,11 @@ function Login({ copyright }) {
                 Sign In
               </Button>
             </Link>
+            <InputErrMsg
+              showError={showError}
+              setShowError={setShowError}
+              errorMsg={error.msg.msg}
+            />
             <Grid container>
               <Grid item xs={3}>
                 <Link href="#" variant="body2">

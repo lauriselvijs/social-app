@@ -25,9 +25,10 @@ export const loadUser = () => async (dispatch, getState) => {
     dispatch({ type: AUTH_ERROR });
   }
   try {
-    const success = await axios.get("/api/v1/auth/user", tokenConfig(getState));
+    const success = await axios.get("/api/users/user", tokenConfig(getState));
     return onSuccess(success.data);
   } catch (error) {
+    console.log(error);
     dispatch(returnErrors(error.response.data, error.response.status));
     return onError();
   }
@@ -64,7 +65,7 @@ export const register =
     }
 
     try {
-      const res = await axios.post("/api/v1/users", body, config);
+      const res = await axios.post("/api/users", body, config);
       return onSuccess(res.data);
     } catch (error) {
       return onError(error);
@@ -98,7 +99,7 @@ export const login =
     }
 
     try {
-      const res = await axios.post("/api/v1/auth", body, config);
+      const res = await axios.post("/api/auth", body, config);
       return onSuccess(res.data);
     } catch (error) {
       return onError(error);

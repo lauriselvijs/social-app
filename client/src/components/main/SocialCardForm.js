@@ -11,7 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
-import InputErrMsg from "./InputErrMsg";
+import InputErrMsg from "../utils/InputErrMsg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +34,7 @@ function SocialCardForm() {
   const [textBoxText, setTextBoxText] = useState();
   const [savePost, setSavePost] = useState(false);
   const [showError, setShowError] = useState(false);
+  const errorMsg = "Please write something";
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -90,7 +91,11 @@ function SocialCardForm() {
       </CardContent>
       <CardActions>
         {showError && (
-          <InputErrMsg showError={showError} setShowError={setShowError} />
+          <InputErrMsg
+            showError={showError}
+            setShowError={setShowError}
+            errorMsg={errorMsg}
+          />
         )}
         <Box justifyContent="flex-center">
           <Button

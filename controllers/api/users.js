@@ -57,10 +57,10 @@ exports.registerNewUser = (req, res, next) => {
 };
 
 // @desc Get user data
-// @route GET /api/users/:uuid
+// @route GET /api/users/user
 // @access Private
 exports.getUserData = async (req, res, next) => {
-  const uuid = req.params.uuid;
+  const uuid = req.user.uuid;
 
   try {
     const user = await User.findOne({

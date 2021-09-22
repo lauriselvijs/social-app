@@ -15,6 +15,6 @@ router
   .get(getUserData)
   .patch(editUserInfo)
   .delete(deleteUser);
-router.route("/:uuid").get(getUserData);
+router.route("/user").all(auth).get(getUserData);
 
 module.exports = router;

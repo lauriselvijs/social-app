@@ -1,3 +1,9 @@
+import React, { useEffect } from "react";
+
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { authActions } from "./state";
+
 import "./App.css";
 import Login from "./components";
 import SignUp from "./components/signup";
@@ -10,6 +16,14 @@ import MyAccount from "./components/my-account/";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
+  const dispatch = useDispatch();
+
+  const { loadUser } = bindActionCreators(authActions, dispatch);
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
   return (
     <Router>
       <div className="App">

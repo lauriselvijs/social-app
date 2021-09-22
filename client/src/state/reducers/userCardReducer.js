@@ -6,36 +6,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  cards: [
-    {
-      id: 1,
-      title: "Title 1",
-      text: "test",
-      dateAdded: "12-24-2021",
-      category: "Note",
-    },
-    {
-      id: 2,
-      title: "Title 2",
-      text: "test 2",
-      dateAdded: "15-24-2021",
-      category: "Idea",
-    },
-    {
-      id: 3,
-      title: "Title 3",
-      text: "test 3",
-      dateAdded: "15-24-2021",
-      category: "Idea",
-    },
-    {
-      id: 4,
-      title: "Title 4",
-      text: "test 4",
-      dateAdded: "15-24-2021",
-      category: "Idea",
-    },
-  ],
+  cards: [],
   loading: false,
   error: [],
 };
@@ -51,7 +22,7 @@ const userCardReducer = (state = initialState, action) => {
     case DELETE_USER_CARD:
       return {
         ...state,
-        cards: state.cards.filter((note) => note._id !== action.payload),
+        cards: state.cards.filter((card) => card._id !== action.payload),
       };
     case ADD_USER_CARD:
       return {
@@ -62,11 +33,6 @@ const userCardReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-      };
-    case DELETE_USER_CARD:
-      return {
-        ...state,
-        cards: [],
       };
     default:
       return state;
