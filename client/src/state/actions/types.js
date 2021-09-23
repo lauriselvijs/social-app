@@ -2,8 +2,11 @@ export const GET_USER_CARDS = "GET_USER_CARDS";
 export const ADD_USER_CARD = "ADD_USER_CARD";
 export const DELETE_USER_CARD = "DELETE_USER_CARD";
 export const USER_CARDS_LOADING = "USER_CARDS_LOADING";
+export const EDIT_USER_CARD = "EDIT_USER_CARD";
 
 export const FORM_SWITCH = "FORM_SWITCH";
+export const SET_BODY = "SET_BODY";
+export const SET_CATEGORY = "SET_CATEGORY";
 
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";

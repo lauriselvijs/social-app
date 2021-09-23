@@ -1,6 +1,7 @@
 import {
   GET_USER_CARDS,
   ADD_USER_CARD,
+  EDIT_USER_CARD,
   DELETE_USER_CARD,
   USER_CARDS_LOADING,
 } from "../actions/types";
@@ -22,9 +23,10 @@ const userCardReducer = (state = initialState, action) => {
     case DELETE_USER_CARD:
       return {
         ...state,
-        cards: state.cards.filter((card) => card._id !== action.payload),
+        cards: state.cards.filter((card) => card.uuid !== action.payload),
       };
     case ADD_USER_CARD:
+    case EDIT_USER_CARD:
       return {
         ...state,
         cards: [...state.cards, action.payload],

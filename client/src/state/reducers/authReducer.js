@@ -12,7 +12,7 @@ const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   isLoading: false,
-  user: null,
+  user: {},
 };
 
 const authReducer = (state = initialState, action) => {
@@ -39,7 +39,6 @@ const authReducer = (state = initialState, action) => {
         isLoading: false,
       };
     case AUTH_ERROR:
-    case LOGIN_SUCCESS:
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
       localStorage.removeItem("token");

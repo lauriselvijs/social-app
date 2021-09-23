@@ -34,7 +34,7 @@ const UserCards = () => {
     <div className={classes.container}>
       {cards.map((card, index) => (
         <div style={{ gridColumnEnd: "span 4" }} key={index}>
-          <UserCard card={card} onDelete={() => deleteUserCard(card.id)} />
+          <UserCard card={card} onDelete={() => deleteUserCard(card.uuid)} />
         </div>
       ))}
     </div>

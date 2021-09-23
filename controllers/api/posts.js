@@ -5,7 +5,9 @@ const { Post, User } = require("../../models");
 // @access Private
 exports.getPosts = async (req, res, next) => {
   try {
-    const posts = await Post.findAll({});
+    const posts = await Post.findAll({
+      include: ["user"],
+    });
 
     return res.status(200).json({
       success: true,

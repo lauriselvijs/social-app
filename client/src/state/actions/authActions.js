@@ -36,7 +36,7 @@ export const loadUser = () => async (dispatch, getState) => {
 
 // Register user
 export const register =
-  ({ name, email, password }) =>
+  ({ firstName: first_name, lastName: last_name, email, password }) =>
   async (dispatch) => {
     // Headers
     const config = {
@@ -46,7 +46,7 @@ export const register =
     };
 
     // Request body
-    const body = JSON.stringify({ name, email, password });
+    const body = JSON.stringify({ first_name, last_name, email, password });
 
     function onSuccess(res) {
       dispatch({ type: REGISTER_SUCCESS, payload: res });

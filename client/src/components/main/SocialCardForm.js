@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -12,6 +12,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputErrMsg from "../utils/InputErrMsg";
+
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { userCardActions } from "../../state";
+import { formSwitchActions } from "../../state";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,26 +35,33 @@ const useStyles = makeStyles((theme) => ({
 
 function SocialCardForm() {
   const classes = useStyles();
-  const [category, setCategory] = useState("Note");
-  const [textBoxText, setTextBoxText] = useState();
   const [savePost, setSavePost] = useState(false);
   const [showError, setShowError] = useState(false);
   const errorMsg = "Please write something";
 
+  //const [body, setBody] = useState();
+  //const [category, setCategory] = useState("Note");
+
+  const dispatch = useDispatch();
+
+  const { addUserCard } = bindActionCreators(userCardActions, dispatch);
+  const { setBody, setCategory } = bindActionCreators(
+    formSwitchActions,
+    dispatch
+  );
+
+  const { body, category } = useSelector((state) => state.formSwitch);
+
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (!textBoxText || !category) {
+    if (!body || !category) {
       setShowError(true);
     } else {
-      console.log("Text added");
-      setCategory("Note");
-      setTextBoxText("");
+      addUserCard({ body, category });
+      setBody("");
       setShowError(false);
     }
-  };
-
-  const handleSave = () => {
     setSavePost(!savePost);
   };
 
@@ -68,8 +80,8 @@ function SocialCardForm() {
         >
           <TextField
             className={classes.textField}
-            value={textBoxText}
-            onChange={(e) => setTextBoxText(e.target.value)}
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
             multiline
             rows={4}
             placeholder="Type something..."
@@ -104,7 +116,7 @@ function SocialCardForm() {
             size="small"
             color="primary"
           >
-            <SaveIcon onClick={handleSave} />
+            <SaveIcon />
           </Button>
         </Box>
       </CardActions>

@@ -13,6 +13,10 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Link as RouterLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import { authActions } from "../../state";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,6 +72,11 @@ const useStyles = makeStyles((theme) => ({
 function Navbar() {
   const classes = useStyles();
 
+  const { user, isLoading } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const { logout } = bindActionCreators(authActions, dispatch);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -116,8 +125,13 @@ function Navbar() {
               <AccountCircleIcon fontSize="large" />
             </Badge>
           </IconButton>
-          {"john@gmail.com"}
-          <IconButton color="inherit" component={RouterLink} to="/">
+          {user.email}
+          <IconButton
+            color="inherit"
+            component={RouterLink}
+            to="/"
+            onClick={() => logout()}
+          >
             <Badge color="secondary">
               <ExitToAppIcon fontSize="large" />
             </Badge>

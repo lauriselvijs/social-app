@@ -30,6 +30,12 @@ import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Link as RouterLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import Loader from "../../loaders/loader";
+
+import { authActions } from "../../state";
+import { formSwitchActions } from "../../state";
 
 const drawerWidth = 240;
 
@@ -152,20 +158,31 @@ const useStyles = makeStyles((theme) => ({
   gridItems: {
     marginTop: theme.spacing(1),
   },
+  loader: {
+    margin: theme.spacing(16),
+    marginLeft: theme.spacing(16),
+  },
 }));
 
 function Dashboard({ copyright }) {
   const classes = useStyles();
 
   const [openDrawer, setOpenDrawer] = useState(true);
-  const [openForm, setOpenForm] = useState(false);
+
+  const { user, isLoading } = useSelector((state) => state.auth);
+  const { openForm } = useSelector((state) => state.formSwitch);
+
+  const dispatch = useDispatch();
+
+  const { logout } = bindActionCreators(authActions, dispatch);
+  const { formSwitch } = bindActionCreators(formSwitchActions, dispatch);
 
   const handleDrawerOpen = () => {
     setOpenDrawer(!openDrawer);
   };
 
   const handleFormOpen = () => {
-    setOpenForm(!openForm);
+    formSwitch(openForm);
   };
 
   return (
@@ -239,8 +256,13 @@ function Dashboard({ copyright }) {
               <AccountCircleIcon fontSize="large" />
             </Badge>
           </IconButton>
-          {"john@gmail.com"}
-          <IconButton color="inherit" component={RouterLink} to="/">
+          {user.email}
+          <IconButton
+            color="inherit"
+            component={RouterLink}
+            to="/"
+            onClick={() => logout()}
+          >
             <Badge color="secondary">
               <ExitToAppIcon fontSize="large" />
             </Badge>
@@ -267,6 +289,7 @@ function Dashboard({ copyright }) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
+
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item sm={6} md={8} lg={10}></Grid>
@@ -297,7 +320,15 @@ function Dashboard({ copyright }) {
               </Grid>
             )}
           </Grid>
-          <UserCards />
+          {isLoading ? (
+            <div className={classes.loader} variant="h4">
+              <Loader />
+            </div>
+          ) : (
+            <>
+              <UserCards />
+            </>
+          )}
           <Box pt={4}>{copyright}</Box>
         </Container>
       </main>

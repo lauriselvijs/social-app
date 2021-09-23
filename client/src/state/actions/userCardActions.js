@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_USER_CARDS,
   ADD_USER_CARD,
+  EDIT_USER_CARD,
   DELETE_USER_CARD,
   USER_CARDS_LOADING,
   CLEAR_STATE,
@@ -25,34 +26,51 @@ export const getUserCards = () => async (dispatch, getState) => {
   }
 };
 
-export const addUserCard = (note) => async (dispatch, getState) => {
+export const addUserCard = (post) => async (dispatch, getState) => {
   function onSuccess() {
-    dispatch({ type: ADD_USER_CARD, payload: note });
-    return note;
+    dispatch({ type: ADD_USER_CARD, payload: post });
+    return post;
   }
   function onError(error) {
     dispatch(returnErrors(error.response.data, error.response.status));
     return error;
   }
   try {
-    await axios.post("/api/posts", note, tokenConfig(getState));
+    await axios.post("/api/posts", post, tokenConfig(getState));
     return onSuccess();
   } catch (error) {
     return onError(error);
   }
 };
 
-export const deleteUserCard = (id) => async (dispatch, getState) => {
+export const editUserCard = (post) => async (dispatch, getState) => {
   function onSuccess() {
-    dispatch({ type: DELETE_USER_CARD, payload: id });
-    return id;
+    dispatch({ type: EDIT_USER_CARD, payload: post });
+    return post;
   }
   function onError(error) {
     dispatch(returnErrors(error.response.data, error.response.status));
     return error;
   }
   try {
-    await axios.delete(`/api/posts/${id}`, tokenConfig(getState));
+    await axios.patch("/api/posts", post, tokenConfig(getState));
+    return onSuccess();
+  } catch (error) {
+    return onError(error);
+  }
+};
+
+export const deleteUserCard = (uuid) => async (dispatch, getState) => {
+  function onSuccess() {
+    dispatch({ type: DELETE_USER_CARD, payload: uuid });
+    return uuid;
+  }
+  function onError(error) {
+    dispatch(returnErrors(error.response.data, error.response.status));
+    return error;
+  }
+  try {
+    await axios.delete(`/api/posts/${uuid}`, tokenConfig(getState));
     return onSuccess();
   } catch (error) {
     return onError(error);
