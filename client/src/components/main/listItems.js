@@ -3,9 +3,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import NotesIcon from "@material-ui/icons/Notes";
-import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
-import CreateIcon from "@material-ui/icons/Create";
+import NotesIcon from "@material-ui/icons/Person";
+import EmojiObjectsIcon from "@material-ui/icons/Group";
 
 export const mainListItems = (
   <div>
@@ -14,19 +13,13 @@ export const mainListItems = (
       <ListItemIcon>
         <NotesIcon />
       </ListItemIcon>
-      <ListItemText primary="Notes" />
+      <ListItemText primary="My posts" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <EmojiObjectsIcon />
       </ListItemIcon>
-      <ListItemText primary="Ideas" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <CreateIcon />
-      </ListItemIcon>
-      <ListItemText primary="Requests" />
+      <ListItemText primary="All posts" />
     </ListItem>
   </div>
 );

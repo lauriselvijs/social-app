@@ -1,4 +1,6 @@
 const { Post, User } = require("../../models");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 // @desc Get all the posts with users
 // @route GET /api/posts
@@ -7,6 +9,43 @@ exports.getPosts = async (req, res, next) => {
   try {
     const posts = await Post.findAll({
       include: ["user"],
+    });
+
+    return res.status(200).json({
+      success: true,
+      count: posts.length,
+      data: posts,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      error: "Server Error",
+    });
+  }
+};
+
+// @desc Get all the posts with users (cursor pagination)
+// @route GET /api/posts/?lastId=number&limit=number
+// @access Private
+exports.getPostsWithCurPag = async (req, res, next) => {
+  try {
+    /*
+    const posts = await Post.findAll({
+      include: ["user"],
+    });
+    */
+
+    const lastId = req.query.lastId;
+    const limit = req.query.limit;
+
+    const cursor = lastId || 0;
+    const posts = await Post.findAll({
+      limit: limit,
+      where: {
+        id: {
+          [Op.gt]: cursor,
+        },
+      },
     });
 
     return res.status(200).json({
@@ -64,9 +103,14 @@ exports.addPost = async (req, res, next) => {
     const user = await User.findOne({ where: { uuid: userUuid } });
     const post = await Post.create({ body, category, userId: user.id });
 
+    const newPost = await Post.findOne({
+      where: { uuid: post.uuid },
+      include: ["user"],
+    });
+
     return res.status(201).json({
       success: true,
-      data: post,
+      data: newPost,
     });
   } catch (err) {
     return res.status(500).json({

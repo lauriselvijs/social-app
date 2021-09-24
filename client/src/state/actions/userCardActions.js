@@ -27,8 +27,8 @@ export const getUserCards = () => async (dispatch, getState) => {
 };
 
 export const addUserCard = (post) => async (dispatch, getState) => {
-  function onSuccess() {
-    dispatch({ type: ADD_USER_CARD, payload: post });
+  function onSuccess(success) {
+    dispatch({ type: ADD_USER_CARD, payload: success });
     return post;
   }
   function onError(error) {
@@ -36,8 +36,8 @@ export const addUserCard = (post) => async (dispatch, getState) => {
     return error;
   }
   try {
-    await axios.post("/api/posts", post, tokenConfig(getState));
-    return onSuccess();
+    const success = await axios.post("/api/posts", post, tokenConfig(getState));
+    return onSuccess(success.data.data);
   } catch (error) {
     return onError(error);
   }

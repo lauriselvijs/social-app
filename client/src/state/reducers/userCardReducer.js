@@ -4,6 +4,7 @@ import {
   EDIT_USER_CARD,
   DELETE_USER_CARD,
   USER_CARDS_LOADING,
+  CLEAR_STATE,
 } from "../actions/types";
 
 const initialState = {
@@ -35,6 +36,11 @@ const userCardReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+      };
+    case CLEAR_STATE:
+      return {
+        ...state,
+        notes: [],
       };
     default:
       return state;

@@ -21,7 +21,8 @@
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "react-moment": "^1.1.1",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.6.5",
+    "sequelize-cursor-pagination": "^2.3.0"
   },
   "devDependencies": {
     "concurrently": "^6.2.1",

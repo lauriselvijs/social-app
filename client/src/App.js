@@ -12,6 +12,7 @@ import Dashboard from "./components/main";
 import NotFound from "./components/not-found";
 import Navbar from "./components/utils/Navbar";
 import MyAccount from "./components/my-account/";
+import InfScroll from "./InfScroll";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -31,7 +32,12 @@ function App() {
           <Route
             path="/"
             exact
-            render={(props) => <Login copyright={Copyright} />}
+            render={(props) => (
+              <>
+                <Login copyright={Copyright} />
+                <InfScroll />
+              </>
+            )}
           />
           <Route
             path="/signup"

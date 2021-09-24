@@ -34,13 +34,8 @@ const useStyles = makeStyles((theme) => ({
 function MyAccount() {
   const classes = useStyles();
 
-  const [name, setName] = useState(false);
   const { user, isLoading } = useSelector((state) => state.auth);
   const userName = user.first_name + " " + user.last_name;
-
-  useEffect(() => {
-    user !== null ? setName(true) : setName(false);
-  }, [user]);
 
   return (
     <div className={classes.root}>
@@ -56,7 +51,7 @@ function MyAccount() {
             My Account
           </Typography>
           <Typography className={classes.text} variant="h5">
-            Name: {name && userName}
+            Name: {userName}
           </Typography>
           <Typography className={classes.text} variant="h5">
             Email: {user.email}

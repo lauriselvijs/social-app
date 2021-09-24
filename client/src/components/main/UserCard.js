@@ -21,20 +21,10 @@ const useStyles = makeStyles({
 function UserCard({ card: { user, body, createdAt, category }, onDelete }) {
   const classes = useStyles();
 
-  const { user: currentUser } = useSelector((state) => state.auth);
-  const [userDefined, setUserDefined] = useState(false);
-
   const { openForm } = useSelector((state) => state.formSwitch);
-
+  const { user: currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
   const { formSwitch } = bindActionCreators(formSwitchActions, dispatch);
-
-  const userName = currentUser.first_name + " " + currentUser.last_name;
-
-  useEffect(() => {
-    currentUser !== null ? setUserDefined(true) : setUserDefined(false);
-  }, [currentUser]);
 
   const handleFormOpen = () => {
     formSwitch(openForm);
@@ -42,31 +32,28 @@ function UserCard({ card: { user, body, createdAt, category }, onDelete }) {
 
   return (
     <Card className={classes.root}>
-      {userDefined && (
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {category}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            component="p"
-            gutterBottom
-          >
-            {body}
-          </Typography>
-          <Typography variant="subtitle2" color="textSecondary" component="p">
-            <Moment format="YYYY-MM-DD HH:mm:ss">{createdAt}</Moment>
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {userName}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {user.email}
-          </Typography>
-        </CardContent>
-      )}
-
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="h2">
+          {category}
+        </Typography>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          gutterBottom
+        >
+          {body}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary" component="p">
+          <Moment format="YYYY-MM-DD HH:mm:ss">{createdAt}</Moment>
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {user ? user.name : ""}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {user ? user.email : ""}
+        </Typography>
+      </CardContent>
       {currentUser.uuid === user.uuid && (
         <CardActions>
           <Box justifyContent="flex-center">
