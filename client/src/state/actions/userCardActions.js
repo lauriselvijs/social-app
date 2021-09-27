@@ -11,6 +11,8 @@ import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 
 export const getUserCards = () => async (dispatch, getState) => {
+  const page = getState().page;
+
   function onSuccess(success) {
     dispatch({ type: GET_USER_CARDS, payload: success });
   }
@@ -19,7 +21,11 @@ export const getUserCards = () => async (dispatch, getState) => {
   }
   try {
     dispatch(setUserCardsLoading());
-    const success = await axios.get("/api/posts", tokenConfig(getState));
+    const success = await axios.post(
+      "/api/posts/all",
+      page,
+      tokenConfig(getState)
+    );
     return onSuccess(success.data.data);
   } catch (error) {
     return onError(error);

@@ -26,7 +26,6 @@ import { mainListItems } from "./listItems";
 import UserCards from "./UserCards";
 import SocialCardForm from "./SocialCardForm";
 import CancelIcon from "@material-ui/icons/Cancel";
-import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Link as RouterLink } from "react-router-dom";
@@ -34,8 +33,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import Loader from "../../loaders/loader";
 
-import { authActions } from "../../state";
-import { formSwitchActions } from "../../state";
+import { authActions, formSwitchActions } from "../../state";
+
+import SortByDateBtn from "./SortByDateBtn";
 
 const drawerWidth = 240;
 
@@ -299,16 +299,7 @@ function Dashboard({ copyright }) {
                 flexDirection="row"
                 justifyContent="flex-end"
               >
-                <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <CalendarTodayIcon />
-                  </Badge>
-                </IconButton>
-                <IconButton color="inherit">
-                  <Badge color="secondary">
-                    <SortByAlphaIcon />
-                  </Badge>
-                </IconButton>
+                <SortByDateBtn />
               </Box>
             </Grid>
           </Grid>

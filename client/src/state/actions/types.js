@@ -8,6 +8,11 @@ export const FORM_SWITCH = "FORM_SWITCH";
 export const SET_BODY = "SET_BODY";
 export const SET_CATEGORY = "SET_CATEGORY";
 
+export const SET_PAGE = "SET_PAGE";
+export const SET_PAGE_FILTER = "SET_PAGE_FILTER";
+export const SET_PAGE_SORT = "SET_PAGE_SORT";
+export const SET_PAGE_SEARCH = "SET_PAGE_SEARCH";
+
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";

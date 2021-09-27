@@ -25,33 +25,41 @@ exports.getPosts = async (req, res, next) => {
 };
 
 // @desc Get all the posts with users (cursor pagination)
-// @route GET /api/posts/?lastId=number&limit=number
+// @route POST /api/posts/all
 // @access Private
 exports.getPostsWithCurPag = async (req, res, next) => {
   try {
-    /*
-    const posts = await Post.findAll({
-      include: ["user"],
-    });
-    */
+    const { page, pageSize, sortByDate, allPosts, search } = req.body;
 
-    const lastId = req.query.lastId;
-    const limit = req.query.limit;
+    const userUuid = req.user.uuid;
+    const user = await User.findOne({ where: { uuid: userUuid } });
 
-    const cursor = lastId || 0;
-    const posts = await Post.findAll({
-      limit: limit,
+    const post = await Post.findAndCountAll({
+      limit: pageSize,
+      offset: (page - 1) * pageSize,
       where: {
-        id: {
-          [Op.gt]: cursor,
+        userId: !allPosts
+          ? user.id
+          : {
+              [Op.not]: null,
+            },
+        body: {
+          [Op.like]: `%${search}%`,
         },
       },
+      order: [["createdAt", sortByDate || "DESC"]],
+      include: ["user"],
     });
 
     return res.status(200).json({
-      success: true,
-      count: posts.length,
-      data: posts,
+      data: post.rows,
+      meta: {
+        current_page: page,
+        per_page: pageSize,
+        count: post.count,
+        total: post.count,
+        total_pages: Math.ceil(post.count / pageSize),
+      },
     });
   } catch (err) {
     return res.status(500).json({
