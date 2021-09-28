@@ -1,6 +1,6 @@
 import { useState } from "react";
 import clsx from "clsx";
-import { makeStyles, alpha } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
 import Box from "@material-ui/core/Box";
@@ -19,21 +19,19 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SettingsIcon from "@material-ui/icons/Settings";
 import PeopleIcon from "@material-ui/icons/People";
-import SearchIcon from "@material-ui/icons/Search";
-import InputBase from "@material-ui/core/InputBase";
 import AddIcon from "@material-ui/icons/Add";
 import { mainListItems } from "./listItems";
 import UserCards from "./UserCards";
 import SocialCardForm from "./SocialCardForm";
 import CancelIcon from "@material-ui/icons/Cancel";
-import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import Loader from "../../loaders/loader";
+import Search from "./Search";
+import Logout from "./Logout";
 
-import { authActions, formSwitchActions } from "../../state";
+import { formSwitchActions } from "../../state";
 
 import SortByDateBtn from "./SortByDateBtn";
 
@@ -116,45 +114,6 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
   gridItems: {
     marginTop: theme.spacing(1),
   },
@@ -174,7 +133,6 @@ function Dashboard({ copyright }) {
 
   const dispatch = useDispatch();
 
-  const { logout } = bindActionCreators(authActions, dispatch);
   const { formSwitch } = bindActionCreators(formSwitchActions, dispatch);
 
   const handleDrawerOpen = () => {
@@ -214,19 +172,7 @@ function Dashboard({ copyright }) {
           >
             Social Hub
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
+          <Search />
           <IconButton color="inherit">
             <Badge color="secondary">
               {!openForm ? (
@@ -257,16 +203,7 @@ function Dashboard({ copyright }) {
             </Badge>
           </IconButton>
           {user.email}
-          <IconButton
-            color="inherit"
-            component={RouterLink}
-            to="/"
-            onClick={() => logout()}
-          >
-            <Badge color="secondary">
-              <ExitToAppIcon fontSize="large" />
-            </Badge>
-          </IconButton>
+          <Logout />
         </Toolbar>
       </AppBar>
       <Drawer

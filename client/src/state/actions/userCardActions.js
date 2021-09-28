@@ -26,7 +26,7 @@ export const getUserCards = () => async (dispatch, getState) => {
       page,
       tokenConfig(getState)
     );
-    return onSuccess(success.data.data);
+    return onSuccess(success.data);
   } catch (error) {
     return onError(error);
   }

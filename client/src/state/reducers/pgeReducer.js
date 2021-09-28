@@ -3,6 +3,8 @@ import {
   SET_PAGE_FILTER,
   SET_PAGE_SORT,
   SET_PAGE_SEARCH,
+  SET_PAGE_FORWARD,
+  SET_PAGE_BACKWARD,
 } from "../actions/types";
 
 const initialState = {
@@ -37,11 +39,25 @@ const formSwitchReducer = (state = initialState, action) => {
     case SET_PAGE_SEARCH:
       return {
         ...state,
-        category: initialState.search.replace(
+        search: initialState.search.replace(
           initialState.search,
           action.payload
         ),
       };
+    case SET_PAGE_FORWARD:
+      return {
+        ...state,
+        page:
+          initialState.page < action.payload
+            ? ++initialState.page
+            : action.payload,
+      };
+    case SET_PAGE_BACKWARD:
+      return {
+        ...state,
+        page: initialState.page > 1 ? --initialState.page : 1,
+      };
+
     default:
       return state;
   }

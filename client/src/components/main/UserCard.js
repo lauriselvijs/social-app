@@ -48,7 +48,7 @@ function UserCard({ card: { user, body, createdAt, category }, onDelete }) {
           <Moment format="YYYY-MM-DD HH:mm:ss">{createdAt}</Moment>
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          {user ? user.name : ""}
+          {user ? user.first_name + " " + user.last_name : ""}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           {user ? user.email : ""}

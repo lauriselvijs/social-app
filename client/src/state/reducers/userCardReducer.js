@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   cards: [],
+  meta: [],
   loading: false,
   error: [],
 };
@@ -18,7 +19,8 @@ const userCardReducer = (state = initialState, action) => {
     case GET_USER_CARDS:
       return {
         ...state,
-        cards: action.payload,
+        cards: action.payload.data,
+        meta: action.payload.meta,
         loading: false,
       };
     case DELETE_USER_CARD:
@@ -40,7 +42,7 @@ const userCardReducer = (state = initialState, action) => {
     case CLEAR_STATE:
       return {
         ...state,
-        notes: [],
+        cards: [],
       };
     default:
       return state;
