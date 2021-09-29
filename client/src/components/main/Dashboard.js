@@ -27,13 +27,15 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
-import Loader from "../../loaders/loader";
+import Loader from "../../loaders/LoaderComp";
 import Search from "./Search";
 import Logout from "./Logout";
 
 import { formSwitchActions } from "../../state";
 
 import SortByDateBtn from "./SortByDateBtn";
+
+import CardDisplayArea from "./CardDisplayArea";
 
 const drawerWidth = 240;
 
@@ -123,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Dashboard({ copyright }) {
+function Dashboard() {
   const classes = useStyles();
 
   const [openDrawer, setOpenDrawer] = useState(true);
@@ -141,6 +143,14 @@ function Dashboard({ copyright }) {
 
   const handleFormOpen = () => {
     formSwitch(openForm);
+  };
+
+  const handleScroll = (e) => {
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    if (bottom) {
+      console.log("test");
+    }
   };
 
   return (
@@ -224,42 +234,7 @@ function Dashboard({ copyright }) {
         <Divider />
         <List>{mainListItems}</List>
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item sm={6} md={8} lg={10}></Grid>
-            <Grid item sm={6} md={4} lg={2}>
-              <Box
-                textAlign="right"
-                flexDirection="row"
-                justifyContent="flex-end"
-              >
-                <SortByDateBtn />
-              </Box>
-            </Grid>
-          </Grid>
-          <Divider />
-          <Grid container spacing={3} className={classes.gridItems}>
-            {openForm && (
-              <Grid item xs={12} md={4} lg={3}>
-                <SocialCardForm />
-              </Grid>
-            )}
-          </Grid>
-          {isLoading ? (
-            <div className={classes.loader} variant="h4">
-              <Loader />
-            </div>
-          ) : (
-            <>
-              <UserCards />
-            </>
-          )}
-          <Box pt={4}>{copyright}</Box>
-        </Container>
-      </main>
+      <CardDisplayArea />
     </div>
   );
 }

@@ -18,11 +18,8 @@ const FilterAllPosts = () => {
 
   const handlePageFilter = () => {
     setPageFilter(true);
-  };
-
-  useEffect(() => {
     getUserCards();
-  }, [allPosts]);
+  };
 
   return (
     <ListItem button onClick={handlePageFilter}>

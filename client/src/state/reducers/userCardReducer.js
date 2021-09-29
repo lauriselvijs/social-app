@@ -17,6 +17,7 @@ const initialState = {
 const userCardReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_CARDS:
+      //console.log("cards", action.payload.data);
       return {
         ...state,
         cards: action.payload.data,

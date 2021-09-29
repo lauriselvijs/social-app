@@ -54,15 +54,19 @@ const Search = () => {
   const classes = useStyles();
 
   const { search } = useSelector((state) => state.page);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const dispatch = useDispatch();
 
   const { setPageSearch } = bindActionCreators(pageActions, dispatch);
-  const { getUserCards } = bindActionCreators(userCardActions, dispatch);
+  const { getUserCards, clearState } = bindActionCreators(
+    userCardActions,
+    dispatch
+  );
 
   useEffect(() => {
-    getUserCards();
-  }, [search]);
+    isAuthenticated ? getUserCards() : clearState();
+  }, [isAuthenticated, search]);
 
   return (
     <div className={classes.search}>

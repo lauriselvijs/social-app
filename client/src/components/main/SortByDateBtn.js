@@ -20,14 +20,10 @@ const SortByDateBtn = () => {
   const { getUserCards } = bindActionCreators(userCardActions, dispatch);
 
   const handleSortByDate = () => {
-    console.log(sortByDate);
     setReverseOrder(!reverseOrder);
     setPageSort(reverseOrder ? "DESC" : "ASC");
-  };
-
-  useEffect(() => {
     getUserCards();
-  }, [setPageSort]);
+  };
 
   return (
     <IconButton color="inherit">

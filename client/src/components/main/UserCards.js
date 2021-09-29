@@ -1,20 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { userCardActions, pageActions } from "../../state";
 import UserCard from "./UserCard";
 import { makeStyles } from "@material-ui/core/styles";
-
-import * as Scroll from "react-scroll";
-import {
-  Link,
-  Button,
-  Element,
-  Events,
-  animateScroll as scroll,
-  scrollSpy,
-  scroller,
-} from "react-scroll";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,23 +19,27 @@ const UserCards = () => {
 
   const cards = useSelector((state) => state.card.cards);
   const dispatch = useDispatch();
-  const { getUserCards, deleteUserCard, clearState } = bindActionCreators(
-    userCardActions,
-    dispatch
-  );
-
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
-  useEffect(() => {
-    isAuthenticated ? getUserCards() : clearState();
-  }, [isAuthenticated]);
-
-  const [counter, setCounter] = useState(1);
-  const { page } = useSelector((state) => state.page);
-  const { setPage, setPageForward, setPageBackward } = bindActionCreators(
+  const { deleteUserCard } = bindActionCreators(userCardActions, dispatch);
+  const { setPageForward, setPageBackward } = bindActionCreators(
     pageActions,
     dispatch
   );
+
+  //const scrollY = useScrollPosition(30 /*fps*/);
+  /*
+
+  useEffect(() => {
+    if (scrollY === 12) {
+      // setBottom(true);
+      // setPageForward();
+      console.log("Bottom");
+    } else {
+      setBottom(false);
+    }
+    //isAuthenticated ? getUserCards() : clearState();
+  }, [scrollY]);
+
+  */
 
   const handleButtonPlus = () => {
     setPageForward();
@@ -56,8 +49,8 @@ const UserCards = () => {
     setPageBackward();
   };
 
-  //console.log(page);
-  console.log("page", page);
+  //console.log("scrollY", scrollY);
+  //console.log("bottom", bottom);
 
   return (
     <div className={classes.container}>
