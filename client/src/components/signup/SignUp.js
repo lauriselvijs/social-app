@@ -18,6 +18,7 @@ import { errorActions } from "../../state";
 import { Link as RouterLink, Redirect } from "react-router-dom";
 
 import InputErrMsg from "../utils/InputErrMsg";
+import Copyright from "../utils/Copyright";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -171,7 +172,7 @@ export default function SignUp({ copyright }) {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>{copyright}</Box>
+      <Copyright />
     </Container>
   );
 }

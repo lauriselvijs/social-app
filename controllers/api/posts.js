@@ -24,7 +24,7 @@ exports.getPosts = async (req, res, next) => {
   }
 };
 
-// @desc Get all the posts with users (cursor pagination)
+// @desc Get all the posts with users
 // @route POST /api/posts/all
 // @access Private
 exports.getPostsWithCurPag = async (req, res, next) => {
@@ -134,13 +134,18 @@ exports.addPost = async (req, res, next) => {
 exports.editPost = async (req, res, next) => {
   try {
     const uuid = req.user.uuid;
-    const { body, category } = req.body;
+    const { uuid: postUUID, body, category } = req.body;
 
     const user = await User.findOne({ where: { uuid } });
+    const post = await Post.findOne({ where: { uuid: postUUID } });
 
-    const post = await Post.update(
+    post = await Post.update(
       { body, category },
-      { where: { userId: user.id }, returning: true, plain: true }
+      {
+        where: { uuid: post.id, userId: user.id },
+        returning: true,
+        plain: true,
+      }
     );
 
     return res.status(200).json({

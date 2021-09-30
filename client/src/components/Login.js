@@ -20,6 +20,7 @@ import { errorActions } from "../state";
 import { Link as RouterLink, Redirect } from "react-router-dom";
 
 import InputErrMsg from "./utils/InputErrMsg";
+import Copyright from "./utils/Copyright";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -152,7 +153,7 @@ function Login({ copyright }) {
                 </Link>
               </Grid>
             </Grid>
-            <Box mt={5}>{copyright}</Box>
+            <Copyright />
           </form>
         </div>
       </Grid>

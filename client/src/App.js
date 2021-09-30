@@ -39,15 +39,11 @@ function App() {
             exact
             render={(props) => (
               <>
-                <Login copyright={Copyright} />
+                <Login />
               </>
             )}
           />
-          <Route
-            path="/signup"
-            exact
-            render={(props) => <SignUp copyright={Copyright} />}
-          />
+          <Route path="/signup" exact render={(props) => <SignUp />} />
           <Route path="/loading" exact render={(props) => <MainLoader />} />
           {isAuthenticated ? (
             <>

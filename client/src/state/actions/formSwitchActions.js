@@ -1,7 +1,11 @@
-import { FORM_SWITCH, SET_BODY, SET_CATEGORY } from "./types";
+import { FORM_SWITCH, SET_BODY, SET_CATEGORY, EDIT_FORM_SWITCH } from "./types";
 
 export const formSwitch = (formSwitch) => async (dispatch) => {
   dispatch({ type: FORM_SWITCH, payload: formSwitch });
+};
+
+export const editFormSwitch = (editFormSwitch) => async (dispatch) => {
+  dispatch({ type: EDIT_FORM_SWITCH, payload: editFormSwitch });
 };
 
 export const setBody = (body) => async (dispatch) => {

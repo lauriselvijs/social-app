@@ -39,9 +39,6 @@ function SocialCardForm() {
   const [showError, setShowError] = useState(false);
   const errorMsg = "Please write something";
 
-  //const [body, setBody] = useState();
-  //const [category, setCategory] = useState("Note");
-
   const dispatch = useDispatch();
 
   const { addUserCard } = bindActionCreators(userCardActions, dispatch);

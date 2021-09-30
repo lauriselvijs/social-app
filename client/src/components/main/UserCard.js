@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -8,9 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Box from "@material-ui/core/Box";
 import Moment from "react-moment";
-import { useDispatch, useSelector } from "react-redux";
-import { bindActionCreators } from "redux";
-import { formSwitchActions } from "../../state";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   root: {
@@ -18,17 +16,14 @@ const useStyles = makeStyles({
   },
 });
 
-function UserCard({ card: { user, body, createdAt, category }, onDelete }) {
+function UserCard({
+  card: { user, body, createdAt, category },
+  onDelete,
+  onEdit,
+}) {
   const classes = useStyles();
 
-  const { openForm } = useSelector((state) => state.formSwitch);
   const { user: currentUser } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-  const { formSwitch } = bindActionCreators(formSwitchActions, dispatch);
-
-  const handleFormOpen = () => {
-    formSwitch(openForm);
-  };
 
   return (
     <Card className={classes.root}>
@@ -57,12 +52,8 @@ function UserCard({ card: { user, body, createdAt, category }, onDelete }) {
       {currentUser.uuid === user.uuid && (
         <CardActions>
           <Box justifyContent="flex-center">
-            <Button
-              size="small"
-              color="primary"
-              onClick={() => handleFormOpen()}
-            >
-              {!openForm ? "Edit" : "Cancel"}
+            <Button size="small" color="primary" onClick={() => onEdit()}>
+              Edit
             </Button>
             <Button size="small" color="primary">
               <DeleteIcon onClick={() => onDelete()} />

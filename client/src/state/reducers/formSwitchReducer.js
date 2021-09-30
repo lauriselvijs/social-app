@@ -1,7 +1,13 @@
-import { FORM_SWITCH, SET_BODY, SET_CATEGORY } from "../actions/types";
+import {
+  FORM_SWITCH,
+  SET_BODY,
+  SET_CATEGORY,
+  EDIT_FORM_SWITCH,
+} from "../actions/types";
 
 const initialState = {
   openForm: false,
+  openEditForm: false,
   body: "",
   category: "Note",
 };
@@ -12,6 +18,11 @@ const formSwitchReducer = (state = initialState, action) => {
       return {
         ...state,
         openForm: !action.payload,
+      };
+    case EDIT_FORM_SWITCH:
+      return {
+        ...state,
+        openEditForm: !action.payload,
       };
     case SET_BODY:
       return {

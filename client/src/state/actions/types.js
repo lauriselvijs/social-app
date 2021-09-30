@@ -7,6 +7,7 @@ export const EDIT_USER_CARD = "EDIT_USER_CARD";
 export const FORM_SWITCH = "FORM_SWITCH";
 export const SET_BODY = "SET_BODY";
 export const SET_CATEGORY = "SET_CATEGORY";
+export const EDIT_FORM_SWITCH = "EDIT_FORM_SWITCH";
 
 export const SET_PAGE = "SET_PAGE";
 export const SET_PAGE_FILTER = "SET_PAGE_FILTER";

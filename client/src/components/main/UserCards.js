@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import { userCardActions, pageActions } from "../../state";
+import { userCardActions, pageActions, formSwitchActions } from "../../state";
 import UserCard from "./UserCard";
 import { makeStyles } from "@material-ui/core/styles";
+import EditUserCard from "./EditUserCard";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -17,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 const UserCards = () => {
   const classes = useStyles();
 
+  const [editCard, setEditCard] = useState();
+  const { openEditForm } = useSelector((state) => state.formSwitch);
   const cards = useSelector((state) => state.card.cards);
   const dispatch = useDispatch();
   const { deleteUserCard } = bindActionCreators(userCardActions, dispatch);
@@ -25,21 +28,7 @@ const UserCards = () => {
     dispatch
   );
 
-  //const scrollY = useScrollPosition(30 /*fps*/);
-  /*
-
-  useEffect(() => {
-    if (scrollY === 12) {
-      // setBottom(true);
-      // setPageForward();
-      console.log("Bottom");
-    } else {
-      setBottom(false);
-    }
-    //isAuthenticated ? getUserCards() : clearState();
-  }, [scrollY]);
-
-  */
+  const { editFormSwitch } = bindActionCreators(formSwitchActions, dispatch);
 
   const handleButtonPlus = () => {
     setPageForward();
@@ -49,18 +38,37 @@ const UserCards = () => {
     setPageBackward();
   };
 
-  //console.log("scrollY", scrollY);
-  //console.log("bottom", bottom);
+  const showEditUserCard = (uuid) => {
+    editFormSwitch(openEditForm);
+    setEditCard(cards.filter((card) => card.uuid === uuid));
+  };
+
+  const hideEditUserCard = () => {
+    editFormSwitch(openEditForm);
+  };
+
+  //console.log("openEditForm", openEditForm);
+  //console.log("editCard", editCard);
+
+  //console.log(editCard);
 
   return (
     <div className={classes.container}>
-      {cards.map((card, index) => (
-        <div style={{ gridColumnEnd: "span 4" }} key={index}>
-          <UserCard card={card} onDelete={() => deleteUserCard(card.uuid)} />
+      {!openEditForm ? (
+        cards.map((card, index) => (
+          <div style={{ gridColumnEnd: "span 4" }} key={index}>
+            <UserCard
+              card={card}
+              onEdit={() => showEditUserCard(card.uuid)}
+              onDelete={() => deleteUserCard(card.uuid)}
+            />
+          </div>
+        ))
+      ) : (
+        <div style={{ gridColumnEnd: "span 4" }}>
+          <EditUserCard card={editCard} onEdit={() => hideEditUserCard()} />
         </div>
-      ))}
-      <button onClick={handleButtonPlus}>Plus</button>
-      <button onClick={handleButtonMinus}>Minus</button>
+      )}
     </div>
   );
 };
