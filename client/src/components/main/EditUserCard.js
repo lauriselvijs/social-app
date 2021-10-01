@@ -34,20 +34,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function EditUserCard({ card, onEdit }) {
-  const [{ body, category }] = [{ card }];
-
   const classes = useStyles();
-  const [savePost, setSavePost] = useState(false);
+  const { uuid, body, category } = card[0];
+
+  const [close, setClose] = useState(false);
+  const [editBody, setEditBody] = useState(body);
+  const [editCategory, setEditCategory] = useState(category);
+
   const [showError, setShowError] = useState(false);
   const errorMsg = "Please write something";
+  const { openEditForm } = useSelector((state) => state.formSwitch);
 
   const dispatch = useDispatch();
 
-  const { addUserCard } = bindActionCreators(userCardActions, dispatch);
-  const { setBody, setCategory } = bindActionCreators(
-    formSwitchActions,
+  const { editUserCard, getUserCards } = bindActionCreators(
+    userCardActions,
     dispatch
   );
+  const { editFormSwitch } = bindActionCreators(formSwitchActions, dispatch);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -55,14 +59,18 @@ function EditUserCard({ card, onEdit }) {
     if (!body || !category) {
       setShowError(true);
     } else {
-      addUserCard({ body, category });
-      setBody("");
+      editUserCard({ uuid, editBody, editCategory });
       setShowError(false);
+
+      setClose(true);
     }
-    setSavePost(!savePost);
   };
 
-  console.log("card", body);
+  const onClose = () => {
+    editFormSwitch(openEditForm);
+    setClose(false);
+    getUserCards();
+  };
 
   return (
     <Card className={classes.root}>
@@ -79,8 +87,8 @@ function EditUserCard({ card, onEdit }) {
         >
           <TextField
             className={classes.textField}
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
+            value={editBody}
+            onChange={(e) => setEditBody(e.target.value)}
             multiline
             rows={4}
             placeholder="Type something..."
@@ -90,9 +98,9 @@ function EditUserCard({ card, onEdit }) {
           <Select
             className={classes.selectMenu}
             labelId="category-select-label"
-            value={category}
+            value={editCategory}
             displayEmpty
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => setEditCategory(e.target.value)}
           >
             <MenuItem value={"Note"}>Note</MenuItem>
             <MenuItem value={"Idea"}>Idea</MenuItem>
@@ -109,9 +117,15 @@ function EditUserCard({ card, onEdit }) {
           />
         )}
         <Box justifyContent="flex-center">
-          <Button size="small" color="primary" onClick={() => onEdit()}>
-            Cancel
-          </Button>
+          {close ? (
+            <Button size="small" color="primary" onClick={() => onClose()}>
+              Close
+            </Button>
+          ) : (
+            <Button size="small" color="primary" onClick={() => onEdit()}>
+              Cancel
+            </Button>
+          )}
           <Button
             form="social-card-form"
             type="submit"

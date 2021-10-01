@@ -50,17 +50,22 @@ export const addUserCard = (post) => async (dispatch, getState) => {
 };
 
 export const editUserCard = (post) => async (dispatch, getState) => {
-  function onSuccess() {
-    dispatch({ type: EDIT_USER_CARD, payload: post });
-    return post;
+  async function onSuccess(response) {
+    getUserCards();
+    dispatch({ type: EDIT_USER_CARD, payload: response });
   }
   function onError(error) {
     dispatch(returnErrors(error.response.data, error.response.status));
     return error;
   }
   try {
-    await axios.patch("/api/posts", post, tokenConfig(getState));
-    return onSuccess();
+    dispatch(setUserCardsLoading());
+    const response = await axios.patch(
+      "/api/posts",
+      post,
+      tokenConfig(getState)
+    );
+    return onSuccess(response.data.data);
   } catch (error) {
     return onError(error);
   }

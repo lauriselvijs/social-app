@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 function SocialCardForm() {
   const classes = useStyles();
-  const [savePost, setSavePost] = useState(false);
   const [showError, setShowError] = useState(false);
   const errorMsg = "Please write something";
 
@@ -59,7 +58,6 @@ function SocialCardForm() {
       setBody("");
       setShowError(false);
     }
-    setSavePost(!savePost);
   };
 
   return (

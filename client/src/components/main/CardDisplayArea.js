@@ -5,10 +5,12 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import UserCards from "./UserCards";
 import SocialCardForm from "./SocialCardForm";
-import { useSelector } from "react-redux";
 import Loader from "../../loaders/LoaderComp";
 import SortByDateBtn from "./SortByDateBtn";
 import Copyright from "../utils/Copyright";
+import { pageActions, userCardActions } from "../../state";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
 
 const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
@@ -30,17 +32,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardDisplayArea = ({ copyright }) => {
+const CardDisplayArea = () => {
   const classes = useStyles();
 
   const { isLoading } = useSelector((state) => state.auth);
   const { openForm } = useSelector((state) => state.formSwitch);
+  const dispatch = useDispatch();
+
+  const { setPageForward } = bindActionCreators(pageActions, dispatch);
+
+  const { getUserCards } = bindActionCreators(userCardActions, dispatch);
 
   const handleScroll = (e) => {
     const bottom =
       e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
     if (bottom) {
-      // console.log("test");
+      setPageForward();
+      getUserCards();
     }
   };
 

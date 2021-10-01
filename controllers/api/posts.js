@@ -134,15 +134,15 @@ exports.addPost = async (req, res, next) => {
 exports.editPost = async (req, res, next) => {
   try {
     const uuid = req.user.uuid;
-    const { uuid: postUUID, body, category } = req.body;
+    const { uuid: postUUID, editBody: body, editCategory: category } = req.body;
 
     const user = await User.findOne({ where: { uuid } });
     const post = await Post.findOne({ where: { uuid: postUUID } });
 
-    post = await Post.update(
+    const editedPost = await Post.update(
       { body, category },
       {
-        where: { uuid: post.id, userId: user.id },
+        where: { uuid: post.uuid, userId: user.id },
         returning: true,
         plain: true,
       }
@@ -150,7 +150,7 @@ exports.editPost = async (req, res, next) => {
 
     return res.status(200).json({
       success: true,
-      data: post[1],
+      data: editedPost[1],
     });
   } catch (err) {
     return res.status(500).json({

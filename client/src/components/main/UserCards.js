@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { userCardActions, pageActions, formSwitchActions } from "../../state";
@@ -46,11 +46,6 @@ const UserCards = () => {
   const hideEditUserCard = () => {
     editFormSwitch(openEditForm);
   };
-
-  //console.log("openEditForm", openEditForm);
-  //console.log("editCard", editCard);
-
-  //console.log(editCard);
 
   return (
     <div className={classes.container}>

@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
 
-const { sequelize, User, Post } = require("./models");
+const { sequelize } = require("./models");
 
 dotenv.config({ path: "./config/config.env" });
 

@@ -3,14 +3,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import GroupIcon from "@material-ui/icons/Group";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { userCardActions, pageActions } from "../../state";
 
 const FilterAllPosts = () => {
-  const { allPosts } = useSelector((state) => state.page);
-
   const dispatch = useDispatch();
 
   const { setPageFilter } = bindActionCreators(pageActions, dispatch);

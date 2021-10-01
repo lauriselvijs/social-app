@@ -58,6 +58,7 @@ function Login({ copyright }) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [showError, setShowError] = useState(false);
+  const [serverError, setServerError] = useState(false);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const error = useSelector((state) => state.error);
@@ -81,10 +82,10 @@ function Login({ copyright }) {
 
   useEffect(() => {
     error.id === "LOGIN_FAIL" ? setShowError(true) : setShowError(false);
+    error.id === "LOGIN_FAIL" && typeof error.msg.msg === "undefined"
+      ? setServerError(true)
+      : setServerError(false);
   }, [error]);
-
-  //loudoe@gmail.com
-  //"password": "123456"
 
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
@@ -140,11 +141,20 @@ function Login({ copyright }) {
                 Sign In
               </Button>
             </Link>
-            <InputErrMsg
-              showError={showError}
-              setShowError={setShowError}
-              errorMsg={error.msg.msg}
-            />
+            {serverError ? (
+              <InputErrMsg
+                showError={showError}
+                setShowError={setShowError}
+                errorMsg={"Server Error"}
+              />
+            ) : (
+              <InputErrMsg
+                showError={showError}
+                setShowError={setShowError}
+                errorMsg={error.msg.msg}
+              />
+            )}
+
             <Grid container>
               <Grid item xs={4}></Grid>
               <Grid item xs={5}>

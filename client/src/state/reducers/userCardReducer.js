@@ -17,10 +17,20 @@ const initialState = {
 const userCardReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_CARDS:
-      //console.log("cards", action.payload.data);
+      //console.log(action.payload.data[0].uuid);
+      console.log(
+        state.cards.filter((card) => card.uuid !== action.payload.data[0].uuid)
+          .length > 0
+      );
       return {
         ...state,
-        cards: action.payload.data,
+        cards:
+          state.cards.filter(
+            (card) => card.uuid === action.payload.data[0].uuid
+          ).length > 0 && state.meta !== null
+            ? state.cards
+            : [...state.cards, ...action.payload.data],
+        //meta: initialState.meta.replace(initialState.meta, action.payload.meta),
         meta: action.payload.meta,
         loading: false,
       };
@@ -30,7 +40,6 @@ const userCardReducer = (state = initialState, action) => {
         cards: state.cards.filter((card) => card.uuid !== action.payload),
       };
     case ADD_USER_CARD:
-    case EDIT_USER_CARD:
       return {
         ...state,
         cards: [...state.cards, action.payload],
@@ -39,6 +48,11 @@ const userCardReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+      };
+    case EDIT_USER_CARD:
+      return {
+        ...state,
+        loading: false,
       };
     case CLEAR_STATE:
       return {
