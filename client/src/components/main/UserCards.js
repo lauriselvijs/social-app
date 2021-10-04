@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import { userCardActions, pageActions, formSwitchActions } from "../../state";
+import { userCardActions, formSwitchActions } from "../../state";
 import UserCard from "./UserCard";
 import { makeStyles } from "@material-ui/core/styles";
 import EditUserCard from "./EditUserCard";
@@ -23,20 +23,8 @@ const UserCards = () => {
   const cards = useSelector((state) => state.card.cards);
   const dispatch = useDispatch();
   const { deleteUserCard } = bindActionCreators(userCardActions, dispatch);
-  const { setPageForward, setPageBackward } = bindActionCreators(
-    pageActions,
-    dispatch
-  );
 
   const { editFormSwitch } = bindActionCreators(formSwitchActions, dispatch);
-
-  const handleButtonPlus = () => {
-    setPageForward();
-  };
-
-  const handleButtonMinus = () => {
-    setPageBackward();
-  };
 
   const showEditUserCard = (uuid) => {
     editFormSwitch(openEditForm);

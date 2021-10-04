@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 // @desc Auth user
 // @route POST /api/auth
 // @access Public
-exports.authUser = (req, res, next) => {
+exports.authUser = (req, res) => {
   const { email, password } = req.body;
 
   // Validation

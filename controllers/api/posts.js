@@ -5,7 +5,7 @@ const Op = Sequelize.Op;
 // @desc Get all the posts with users
 // @route GET /api/posts
 // @access Private
-exports.getPosts = async (req, res, next) => {
+exports.getPosts = async (res) => {
   try {
     const posts = await Post.findAll({
       include: ["user"],
@@ -27,7 +27,7 @@ exports.getPosts = async (req, res, next) => {
 // @desc Get all the posts with users
 // @route POST /api/posts/all
 // @access Private
-exports.getPostsWithCurPag = async (req, res, next) => {
+exports.getPostsWithCurPag = async (req, res) => {
   try {
     const { page, pageSize, sortByDate, allPosts, search } = req.body;
 
@@ -72,7 +72,7 @@ exports.getPostsWithCurPag = async (req, res, next) => {
 // @desc Get a post with user
 // @route GET /api/posts/:uuid
 // @access Private
-exports.getPost = async (req, res, next) => {
+exports.getPost = async (req, res) => {
   const uuid = req.params.uuid;
 
   try {
@@ -103,7 +103,7 @@ exports.getPost = async (req, res, next) => {
 // @desc Add post
 // @route POST /api/posts
 // @access Private
-exports.addPost = async (req, res, next) => {
+exports.addPost = async (req, res) => {
   try {
     const { body, category } = req.body;
     const userUuid = req.user.uuid;
@@ -131,7 +131,7 @@ exports.addPost = async (req, res, next) => {
 // @desc Update post
 // @route PATCH /api/posts
 // @access Private
-exports.editPost = async (req, res, next) => {
+exports.editPost = async (req, res) => {
   try {
     const uuid = req.user.uuid;
     const { uuid: postUUID, editBody: body, editCategory: category } = req.body;
@@ -163,7 +163,7 @@ exports.editPost = async (req, res, next) => {
 // @desc Delete post
 // @route DELETE /api/posts/:uuid
 // @access Private
-exports.deletePost = async (req, res, next) => {
+exports.deletePost = async (req, res) => {
   try {
     const userUuid = req.user.uuid;
     const uuid = req.params.uuid;

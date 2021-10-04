@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 // @desc Register new user
 // @route POST /api/users
 // @access Public
-exports.registerNewUser = (req, res, next) => {
+exports.registerNewUser = (req, res) => {
   const { first_name, last_name, email, password } = req.body;
 
   // Validation
@@ -59,7 +59,7 @@ exports.registerNewUser = (req, res, next) => {
 // @desc Get user data
 // @route GET /api/users/user
 // @access Private
-exports.getUserData = async (req, res, next) => {
+exports.getUserData = async (req, res) => {
   const uuid = req.user.uuid;
 
   try {
@@ -77,7 +77,7 @@ exports.getUserData = async (req, res, next) => {
 // @desc Edits user information
 // @route PATCH /api/users
 // @access Private
-exports.editUserInfo = async (req, res, next) => {
+exports.editUserInfo = async (req, res) => {
   try {
     const uuid = req.user.uuid;
     const { first_name, last_name, email } = req.body;
@@ -111,7 +111,7 @@ exports.editUserInfo = async (req, res, next) => {
 // @desc Delete user
 // @route DELETE /api/users
 // @access Private
-exports.deleteUser = async (req, res, next) => {
+exports.deleteUser = async (req, res) => {
   try {
     const uuid = req.user.uuid;
 

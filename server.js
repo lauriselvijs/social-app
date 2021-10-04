@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
+const path = require("path");
 
 const { sequelize } = require("./models");
 
@@ -28,14 +29,16 @@ if (process.env.NODE_ENV === "production") {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, async () => {
+app.listen(PORT, async (res) => {
   console.log(
-    `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
+    colors.yellow.bold(
+      `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+    )
   );
 
   try {
     await sequelize.authenticate();
-    console.log("Database Connected!".green.bold);
+    console.log(colors.green.bold("Database Connected!"));
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: "Failed to connect" });

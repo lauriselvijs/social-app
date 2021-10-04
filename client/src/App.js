@@ -37,25 +37,21 @@ function App() {
           <Route
             path="/"
             exact
-            render={(props) => (
+            render={() => (
               <>
                 <Login />
               </>
             )}
           />
-          <Route path="/signup" exact render={(props) => <SignUp />} />
-          <Route path="/loading" exact render={(props) => <MainLoader />} />
+          <Route path="/signup" exact render={() => <SignUp />} />
+          <Route path="/loading" exact render={() => <MainLoader />} />
           {isAuthenticated ? (
             <>
-              <Route
-                path="/dashboard"
-                exact
-                render={(props) => <Dashboard />}
-              />
+              <Route path="/dashboard" exact render={() => <Dashboard />} />
               <Route
                 path="/my-account"
                 exact
-                render={(props) => (
+                render={() => (
                   <>
                     <Navbar />
                     <MyAccount />
@@ -68,7 +64,7 @@ function App() {
             <Redirect to="/loading" />
           )}
           <Route
-            render={(props) => (
+            render={() => (
               <>
                 <NotFound />
                 <Copyright />

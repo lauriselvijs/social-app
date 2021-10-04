@@ -5,7 +5,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -15,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { authActions } from "../state";
-import { errorActions } from "../state";
 
 import { Link as RouterLink, Redirect } from "react-router-dom";
 
@@ -52,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login({ copyright }) {
+function Login() {
   const classes = useStyles();
 
   const [email, setEmail] = useState();
@@ -66,7 +64,6 @@ function Login({ copyright }) {
   const dispatch = useDispatch();
 
   const { login } = bindActionCreators(authActions, dispatch);
-  const { clearErrors } = bindActionCreators(errorActions, dispatch);
 
   // checking for empty input
   const onSubmit = (e) => {

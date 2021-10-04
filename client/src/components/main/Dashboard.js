@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
-import Box from "@material-ui/core/Box";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
@@ -11,8 +10,6 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -21,19 +18,14 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import PeopleIcon from "@material-ui/icons/People";
 import AddIcon from "@material-ui/icons/Add";
 import { mainListItems } from "./listItems";
-import UserCards from "./UserCards";
-import SocialCardForm from "./SocialCardForm";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
-import Loader from "../../loaders/LoaderComp";
 import Search from "./Search";
 import Logout from "./Logout";
 
 import { formSwitchActions } from "../../state";
-
-import SortByDateBtn from "./SortByDateBtn";
 
 import CardDisplayArea from "./CardDisplayArea";
 
@@ -130,7 +122,7 @@ function Dashboard() {
 
   const [openDrawer, setOpenDrawer] = useState(true);
 
-  const { user, isLoading } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const { openForm } = useSelector((state) => state.formSwitch);
 
   const dispatch = useDispatch();
@@ -143,14 +135,6 @@ function Dashboard() {
 
   const handleFormOpen = () => {
     formSwitch(openForm);
-  };
-
-  const handleScroll = (e) => {
-    const bottom =
-      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
-    if (bottom) {
-      console.log("test");
-    }
   };
 
   return (
