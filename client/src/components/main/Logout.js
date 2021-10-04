@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import IconButton from "@material-ui/core/IconButton";

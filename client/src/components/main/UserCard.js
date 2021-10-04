@@ -1,4 +1,3 @@
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -9,6 +8,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Box from "@material-ui/core/Box";
 import Moment from "react-moment";
 import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
   root: {
@@ -64,5 +64,22 @@ function UserCard({
     </Card>
   );
 }
+
+UserCard.propTypes = {
+  card: PropTypes.array,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
+};
+
+UserCard.defaultProps = {
+  card: {
+    user: { uuid: "", first_name: "", last_name: "", email: "" },
+    body: "",
+    category: "",
+    createdAt: "",
+  },
+  onEdit: () => {},
+  onDelete: () => {},
+};
 
 export default UserCard;

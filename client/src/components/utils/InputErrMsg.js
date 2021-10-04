@@ -1,4 +1,3 @@
-import React from "react";
 import Alert from "@material-ui/lab/Alert";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
@@ -28,12 +27,15 @@ function InputErrMsg({ errorMsg, showError, setShowError }) {
 }
 
 InputErrMsg.propTypes = {
+  errorMsg: PropTypes.string,
   showError: PropTypes.bool,
   setShowError: PropTypes.func,
 };
 
 InputErrMsg.defaultProps = {
+  errorMsg: "Default Error",
   showError: false,
+  setShowError: () => {},
 };
 
 export default InputErrMsg;

@@ -1,4 +1,3 @@
-import React from "react";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import FilterMyPosts from "./FilterMyPosts";
 import FilterAllPosts from "./FilterAllPosts";

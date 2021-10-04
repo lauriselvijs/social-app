@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -139,5 +140,15 @@ function EditUserCard({ card, onEdit }) {
     </Card>
   );
 }
+
+EditUserCard.propTypes = {
+  card: PropTypes.array,
+  onEdit: PropTypes.func,
+};
+
+EditUserCard.defaultProps = {
+  card: [{ uuid: "", body: "", category: "" }],
+  onEdit: () => {},
+};
 
 export default EditUserCard;
