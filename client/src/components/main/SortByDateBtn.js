@@ -16,12 +16,17 @@ const SortByDateBtn = () => {
 
   const dispatch = useDispatch();
 
-  const { setPageSort } = bindActionCreators(pageActions, dispatch);
-  const { getUserCards } = bindActionCreators(userCardActions, dispatch);
+  const { setPageSort, setPage } = bindActionCreators(pageActions, dispatch);
+  const { getUserCards, clearState } = bindActionCreators(
+    userCardActions,
+    dispatch
+  );
 
   const handleSortByDate = () => {
     setReverseOrder(!reverseOrder);
     setPageSort(reverseOrder ? "DESC" : "ASC");
+    clearState();
+    setPage(1);
     getUserCards();
   };
 

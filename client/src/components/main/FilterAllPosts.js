@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -11,11 +11,16 @@ import { userCardActions, pageActions } from "../../state";
 const FilterAllPosts = () => {
   const dispatch = useDispatch();
 
-  const { setPageFilter } = bindActionCreators(pageActions, dispatch);
-  const { getUserCards } = bindActionCreators(userCardActions, dispatch);
+  const { setPageFilter, setPage } = bindActionCreators(pageActions, dispatch);
+  const { getUserCards, clearState } = bindActionCreators(
+    userCardActions,
+    dispatch
+  );
 
   const handlePageFilter = () => {
     setPageFilter(true);
+    clearState();
+    setPage(1);
     getUserCards();
   };
 

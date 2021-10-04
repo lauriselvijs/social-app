@@ -17,11 +17,6 @@ const initialState = {
 const userCardReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_CARDS:
-      //console.log(action.payload.data[0].uuid);
-      console.log(
-        state.cards.filter((card) => card.uuid !== action.payload.data[0].uuid)
-          .length > 0
-      );
       return {
         ...state,
         cards:
@@ -30,7 +25,6 @@ const userCardReducer = (state = initialState, action) => {
           ).length > 0 && state.meta !== null
             ? state.cards
             : [...state.cards, ...action.payload.data],
-        //meta: initialState.meta.replace(initialState.meta, action.payload.meta),
         meta: action.payload.meta,
         loading: false,
       };

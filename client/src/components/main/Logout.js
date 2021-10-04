@@ -1,21 +1,23 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import IconButton from "@material-ui/core/IconButton";
 import { Link as RouterLink } from "react-router-dom";
 import Badge from "@material-ui/core/Badge";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
-import { authActions, userCardActions } from "../../state";
+import { authActions, userCardActions, errorActions } from "../../state";
 
 const Logout = () => {
   const dispatch = useDispatch();
 
   const { logout } = bindActionCreators(authActions, dispatch);
   const { clearState } = bindActionCreators(userCardActions, dispatch);
+  const { clearErrors } = bindActionCreators(errorActions, dispatch);
 
   const handleOnClickLogout = () => {
     logout();
+    clearErrors();
     clearState();
   };
 

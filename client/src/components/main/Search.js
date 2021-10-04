@@ -58,7 +58,7 @@ const Search = () => {
 
   const dispatch = useDispatch();
 
-  const { setPageSearch } = bindActionCreators(pageActions, dispatch);
+  const { setPageSearch, setPage } = bindActionCreators(pageActions, dispatch);
   const { getUserCards, clearState } = bindActionCreators(
     userCardActions,
     dispatch
@@ -66,6 +66,12 @@ const Search = () => {
 
   useEffect(() => {
     isAuthenticated ? getUserCards() : clearState();
+
+    if (search) {
+      clearState();
+      setPage(1);
+      getUserCards();
+    }
   }, [isAuthenticated, search]);
 
   return (
