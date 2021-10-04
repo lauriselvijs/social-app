@@ -11,7 +11,9 @@
     "server": "nodemon server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server \" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "build": "sequelize db:migrate --env production && <other stuff to do before run the app>",
+    "migrate": "sequelize db:migrate"
   },
   "author": "",
   "license": "ISC",
@@ -23,7 +25,8 @@
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.6.5",
+    "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
     "concurrently": "^6.2.1",
